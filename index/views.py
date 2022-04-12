@@ -1,11 +1,13 @@
+import re
+from django.db import reset_queries
 from django.shortcuts import redirect, render
 from django.contrib.auth import login as django_login, authenticate, logout
-from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
+from .forms import FormularioRegistro
 
 
-# Create your views here.
+#------ingreso al sistema login de usuario ---------------------------------------------------
 def index(request):
-    
 
     if request.method=="POST":
         form=AuthenticationForm(request, data=request.POST)
@@ -17,20 +19,35 @@ def index(request):
             user = authenticate(username=username,password=password)
 
             if user is not None:
+                nombre=username
                 django_login(request, user=user)
-                return render(request,'home.html',{})
+                return render(request,'home.html',{'nombre':nombre})
             else:
-                return render(request,'index.html',{'form':form})
+                # return render(request,'index.html',{'form':form,'msj':'Usuario inexistente'})
+                return render(request,'salida_sist.html',{'msj':'Usuario inexistente'})
 
         else:
-            return render (request,'index.html',{'form':form, 'msg':'Error de autenticacion'})
+            # return render (request,'index.html',{'form':form, 'msj':'Error de autenticacion'})
+            return render(request,'salida_sist.html',{'msj':'Error de autenticacion'})
     else:
-# django_login, authenticate, AuthenticationForm
         form=AuthenticationForm()
-        return render (request, 'index.html', {'form':form, 'msg':'Error de login'})
+        return render (request, 'index.html', {'form':form, 'msj':''})
 
+#------Carga de home --------------------------------------------------------------------------
 def home(request):
     return render (request, 'home.html', {})
 
-# def logout(request):
-#     return redirect('index.html',{})
+#------registro de usuario en el sistema -----------------------------------------------------
+def registrar(request):
+
+    if request.method =='POST':
+        form=FormularioRegistro(request.POST)
+
+        if form.is_valid():
+            username=form.cleaned_data['username']
+            form.save()
+            return render(request,'salida_sist.html',{'msj':'Usuario Creado'})
+
+
+    form=FormularioRegistro()
+    return render(request,'registrar.html',{'form':form, 'msj':''})

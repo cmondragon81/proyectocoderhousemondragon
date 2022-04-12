@@ -1,0 +1,22 @@
+{% extends 'index.html' %}
+
+<ul>
+    {% block "salida_sist" %}
+    <li><a href={% url 'index' %}>Ingresar</a></li>
+    {% endblock "salida_sist" %}
+</ul>
+
+<body>
+    {% block "tabla_inicio" %}
+    {% endblock "tabla_inicio" %}
+    <div id="prueba">
+        {% block "formulario_ingreso" %}
+        <form action="" method="post" id="pform">
+            {% csrf_token %}
+            {{form.as_p}}
+            <button>Registrar</button>
+        </form>
+        {% endblock "formulario_ingreso" %}
+    </div>
+</body>
+</html>

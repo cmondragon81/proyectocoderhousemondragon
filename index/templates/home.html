@@ -1,14 +1,18 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home</title>
-</head>
-<body>
-    <h1>puto el que lee</h1>
-    <a href={% url 'logout' %}>Logout</a>
-</body>
-</html>
+{% extends 'index.html' %}
+
+{% block "salida_sist" %}
+    <li><a href="#contact">Contact</a></li>
+    <li><a href="#about">About</a></li>
+    <li id="usuario">Bienvenido: {{nombre}}</li>
+    <li style="float:right"><a href={% url 'msg' %}>Logout</a></li>
+
+{% endblock "salida_sist" %}
+
+{% csrf_token %}
+{% block "formulario_ingreso" %}
+{% endblock "formulario_ingreso" %}
+
+{% block "tabla_inicio" %}
+{% endblock "tabla_inicio" %}
+
 

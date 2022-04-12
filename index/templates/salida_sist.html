@@ -1,2 +1,48 @@
-<h1>Saliste del sistema</h1>
-<a href= {% url 'index' %}>Volver al inicio</a>
+{% extends 'index.html' %}
+{% load static %}
+
+<ul>
+    {% block "salida_sist" %}
+        {% if msj %}
+            <li><a href={% url 'index' %}>Ingresar</a></li>
+        {% else %}
+            <li><a href={% url 'index' %}>Ingresar</a></li>
+            <li><a href={% url 'registrar' %}>Registrar</a></li>
+        {% endif %}
+
+    {% endblock "salida_sist" %}
+</ul>
+
+{% block "tabla_inicio" %}
+<table style = "margin-left: auto; margin-right: auto;">
+    <tbody>
+    <tr>
+      <td>
+        {% if msj == "Usuario Creado" %}
+            <img src= {% static 'assets/ok' %} alt="ok" width="100" height="100"></td>
+        {% endif %}
+
+        {% if msj == "Usuario inexistente" or msj == "Error de autenticacion" %}
+            <img src= {% static 'assets/error' %} alt="error" width="100" height="100"></td>
+        {% endif %}
+
+        {% if not msj %}
+            <img src= {% static 'assets/logout.png' %} alt="exit" width="100" height="100"></td>
+        {% endif %}
+      <td>
+          {% if msj %}
+            <h4>{{msj}}</h4>
+          {% else %}
+            <h4>Salida del blog exitosa</h4>        
+          {% endif %}
+      </td>
+    </tr>
+    </tbody>
+</table>
+{% endblock "tabla_inicio" %}
+
+
+
+{% block "formulario_ingreso" %}   
+{% endblock "formulario_ingreso" %}
+

@@ -1,16 +1,65 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    {% load static %}
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="{% static 'css/styles.css' %}" rel="stylesheet"/>
     <title>Login</title>
 </head>
 <body>
-    <form action="" method="post">
-        {% csrf_token %}
-        {{form.as_p}}
-        <button>Ingresar</button>
-    </form>
+    <style>
+        body {
+          background-image: url({% static 'assets/rename.jpg' %});
+          background-repeat: no-repeat;
+          background-attachment: fixed;
+          background-size: cover;
+        }
+    </style>
+    <div>
+        <ul>
+            {% block "salida_sist" %}
+            <li><a href={% url 'registrar' %}>Registrar</a></li>
+            {% endblock "salida_sist" %}
+        </ul>
+    </div>
+
+    <div>
+        {% block "tabla_inicio" %}
+        <table>
+            <tbody>
+            <tr>
+              <td><img src= {% static 'assets/uno.jpg' %} alt="Escuela"></td>
+              <td>
+                <p><h2>Bienvenido al blog de la escuela</h2>
+                    <br>
+                    <br>
+                    <h3>
+                    "La escuela es la institución donde se enseña y se aprende.
+                    <br>
+                    Está compuesta por un conjunto de profesores y alumnos. 
+                    Puede ser pública o privada. También se llama escuela al 
+                    edificio o local donde está esta institución, o a la enseñanza 
+                    que se da o se adquiere en una escuela."</h3>
+                </p>
+              </td>
+            </tr>
+            </tbody>
+        </table>
+        {% endblock "tabla_inicio" %}
+    </div>
+
+    <div id="prueba">
+        {% block "formulario_ingreso" %}
+            <form action="" method="post" id="pform">
+                {% csrf_token %}
+                {{form.as_p}}
+                <button>Ingresar</button>
+                <br>
+            </form>
+            {{msj}}
+        {% endblock "formulario_ingreso" %}
+    </div>
 </body>
 </html>
