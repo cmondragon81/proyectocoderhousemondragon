@@ -1,10 +1,8 @@
-import re
 from django.db import reset_queries
 from django.shortcuts import redirect, render
 from django.contrib.auth import login as django_login, authenticate, logout
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from .forms import FormularioRegistro
-
 
 #------ingreso al sistema login de usuario ---------------------------------------------------
 def index(request):
@@ -21,21 +19,18 @@ def index(request):
             if user is not None:
                 nombre=username
                 django_login(request, user=user)
-                return render(request,'home.html',{'nombre':nombre})
+                if nombre == 'admin':
+                    return render(request,'salida_sist.html',{'msj':'Entrada incorrecta del administrador'})
+                else:
+                    return render(request,'alumnos/home.html',{'nombre':nombre})
             else:
-                # return render(request,'index.html',{'form':form,'msj':'Usuario inexistente'})
                 return render(request,'salida_sist.html',{'msj':'Usuario inexistente'})
 
         else:
-            # return render (request,'index.html',{'form':form, 'msj':'Error de autenticacion'})
             return render(request,'salida_sist.html',{'msj':'Error de autenticacion'})
     else:
         form=AuthenticationForm()
         return render (request, 'index.html', {'form':form, 'msj':''})
-
-#------Carga de home --------------------------------------------------------------------------
-def home(request):
-    return render (request, 'home.html', {})
 
 #------registro de usuario en el sistema -----------------------------------------------------
 def registrar(request):

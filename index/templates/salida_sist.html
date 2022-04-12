@@ -25,6 +25,10 @@
         {% if msj == "Usuario inexistente" or msj == "Error de autenticacion" %}
             <img src= {% static 'assets/error' %} alt="error" width="100" height="100"></td>
         {% endif %}
+            
+        {% if msj == "Entrada incorrecta del administrador" %}
+            <img src= {% static 'assets/forbidden.png' %} alt="error" width="150" height="100"></td>
+        {% endif %}
 
         {% if not msj %}
             <img src= {% static 'assets/logout.png' %} alt="exit" width="100" height="100"></td>
