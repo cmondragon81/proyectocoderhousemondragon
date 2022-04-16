@@ -3,6 +3,7 @@ from django.shortcuts import redirect, render
 from django.contrib.auth import login as django_login, authenticate, logout
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from .forms import FormularioRegistro
+from django.contrib.auth.models import User
 
 #------ingreso al sistema login de usuario ---------------------------------------------------
 def index(request):
@@ -18,11 +19,13 @@ def index(request):
 
             if user is not None:
                 nombre=username
+                persona=user.first_name + ' ' + user.last_name
                 django_login(request, user=user)
+                
                 if nombre == 'admin':
                     return render(request,'salida_sist.html',{'msj':'Entrada incorrecta del administrador'})
                 else:
-                    return render(request,'alumnos/home.html',{'nombre':nombre})
+                    return render(request, 'alumnos/home.html',{'nombre':persona})
             else:
                 return render(request,'salida_sist.html',{'msj':'Usuario inexistente'})
 
@@ -40,7 +43,16 @@ def registrar(request):
 
         if form.is_valid():
             username=form.cleaned_data['username']
-            form.save()
+            emailuser=form.cleaned_data['email']
+            nomusuario=form.cleaned_data['nombre']
+            apellidousu=form.cleaned_data['apellido']
+            passwordusu=form.cleaned_data['password1']
+
+            user = User.objects.create_user(username,emailuser,passwordusu)
+            user.first_name=nomusuario
+            user.last_name=apellidousu
+
+            user.save()
             return render(request,'salida_sist.html',{'msj':'Usuario Creado'})
 
 

@@ -1,8 +1,7 @@
 {% extends 'index.html' %}
 {% block "salida_sist" %}
-    <li><a href={% url 'materias' %}>Cursos</a></li>
     <li><a href="#">Novedades</a></li>
-    <li id="usuario">Bienvenido: {{nombre}}</li>
+    {% comment %} <li id="usuario">Bienvenido: {{nombre}}</li> {% endcomment %}
     <li style="float:right"><a href={% url 'msg' %}>Logout</a></li>
 {% endblock "salida_sist" %}
 

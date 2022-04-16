@@ -54,7 +54,8 @@
         {% block "formulario_ingreso" %}
             <form action="" method="post" id="pform">
                 {% csrf_token %}
-                {{form.as_p}}
+                {{form.as_table}}
+                <br>
                 <button>Ingresar</button>
                 <br>
             </form>
